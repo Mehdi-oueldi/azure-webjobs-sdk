@@ -15,3 +15,4 @@ csx
 /buildoutput
 
 /tools/NuGet.exe
+/sample/SampleHost/appsettings.development.json

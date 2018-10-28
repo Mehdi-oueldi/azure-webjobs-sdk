@@ -17,6 +17,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly ServiceBusOptions _options;
         private readonly MessagingProvider _messagingProvider;
+        private readonly SessionProvider _sessionProvider;
 
         public ServiceBusSubscriptionListenerFactory(ServiceBusAccount account, string topicName, string subscriptionName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, MessagingProvider messagingProvider)
         {
@@ -27,13 +28,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _options = options;
             _messagingProvider = messagingProvider;
         }
+        public ServiceBusSubscriptionListenerFactory(ServiceBusAccount account, string topicName, string subscriptionName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, SessionProvider sessionProvider)
+        {
+            _account = account;
+            _topicName = topicName;
+            _subscriptionName = subscriptionName;
+            _executor = executor;
+            _options = options;
+            _sessionProvider = sessionProvider;
+        }
 
         public Task<IListener> CreateAsync(CancellationToken cancellationToken)
         {
             string entityPath = EntityNameHelper.FormatSubscriptionPath(_topicName, _subscriptionName);
 
             ServiceBusTriggerExecutor triggerExecutor = new ServiceBusTriggerExecutor(_executor);
-            var listener = new ServiceBusListener(entityPath, triggerExecutor, _options, _account, _messagingProvider);
+            
+            var listener = (_sessionProvider == null) ?
+             new ServiceBusListener(entityPath, triggerExecutor, _options, _account, _messagingProvider) as IListener :
+             new ServiceBusSessionListener(entityPath, triggerExecutor, _options, _account, _sessionProvider) as IListener;
 
             return Task.FromResult<IListener>(listener);
         }

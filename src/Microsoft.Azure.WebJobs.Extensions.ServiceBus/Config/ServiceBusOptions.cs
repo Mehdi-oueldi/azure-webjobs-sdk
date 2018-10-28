@@ -24,6 +24,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 MaxConcurrentCalls = 16
             };
+            //TODO bind session handler options
+            SessionHandlerOptions = new SessionHandlerOptions(ExceptionReceivedHandler)
+            {
+                 MaxConcurrentSessions = 16
+            };
         }
 
         /// <summary>
@@ -36,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <see cref="MessageReceiver"/>s.
         /// </summary>
         public MessageHandlerOptions MessageHandlerOptions { get; set; }
+        public SessionHandlerOptions SessionHandlerOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the default PrefetchCount that will be used by <see cref="MessageReceiver"/>s.

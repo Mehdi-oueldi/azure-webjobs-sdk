@@ -3,7 +3,11 @@
 
 using System.Threading.Tasks;
 using Microsoft.Azure.EventHubs;
+using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.ServiceBus.Core;
+using Microsoft.Azure.ServiceBus.InteropExtensions;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using SampleHost.Filters;
@@ -14,6 +18,8 @@ namespace SampleHost
     [ErrorHandler]
     public class Functions
     {
+
+
         private readonly ISampleServiceA _sampleServiceA;
         private readonly ISampleServiceB _sampleServiceB;
 
@@ -49,11 +55,14 @@ namespace SampleHost
         }
 
         public async Task ProcessWorkItem_ServiceBus(
-            [ServiceBusTrigger("test-items")] WorkItem item,
+            [ServiceBusSessionTrigger("test-session-queue")] WorkItem message,
             string messageId,
             int deliveryCount,
+            IMessageSession messageSession,
             ILogger log)
+            
         {
+            
             log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
 
             await Task.Delay(1000);

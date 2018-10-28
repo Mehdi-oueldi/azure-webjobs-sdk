@@ -47,8 +47,20 @@ namespace Microsoft.Extensions.Hosting
 
                     configure(options);
                 });
-
             builder.Services.TryAddSingleton<MessagingProvider>();
+
+
+            builder.AddExtension<ServiceBusSessionExtensionConfigProvider>()
+              .ConfigureOptions<ServiceBusOptions>((config, path, options) =>
+              {
+                  options.ConnectionString = config.GetConnectionString(Constants.DefaultConnectionStringName);
+
+                  IConfigurationSection section = config.GetSection(path);
+                  section.Bind(options);
+
+                  configure(options);
+              });
+            builder.Services.TryAddSingleton<SessionProvider>();
 
             return builder;
         }

@@ -2,12 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using SampleHost.Models;
 
 namespace SampleHost
 {
@@ -19,13 +23,15 @@ namespace SampleHost
                 .UseEnvironment("Development")
                 .ConfigureWebJobs(b =>
                 {
-                    b.AddAzureStorageCoreServices()
+                    b
+                    .AddAzureStorageCoreServices()
                     .AddAzureStorage()
-                    .AddServiceBus()
-                    .AddEventHubs();
+                    .AddServiceBus();
+                    //.AddEventHubs();
                 })
                 .ConfigureAppConfiguration(b =>
                 {
+                    b.AddJsonFile("appsettings.development.json");
                     // Adding command line as a configuration source
                     b.AddCommandLine(args);
                 })
@@ -52,6 +58,21 @@ namespace SampleHost
             var host = builder.Build();
             using (host)
             {
+                
+                var content = new WorkItem() { Category = 123, ID = "1", Description = "desc132", Priority = 1, Region = "IDF" };
+                var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(content)));
+                var sb = new ServiceBusConnectionStringBuilder(host.Services.GetService<IConfiguration>()?.GetConnectionString("ServiceBus"));
+                sb.EntityPath = "test-session-queue";
+                var queueClient = new QueueClient(sb);                
+                message.ContentType = "application/json";
+                message.SessionId = "123";
+
+                
+
+                // Send the message to the queue
+                await queueClient.SendAsync(message);
+
+
                 await host.RunAsync();
             }
         }
