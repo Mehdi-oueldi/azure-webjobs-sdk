@@ -59,21 +59,32 @@ namespace SampleHost
             using (host)
             {
                 
-                var content = new WorkItem() { Category = 123, ID = "1", Description = "desc132", Priority = 1, Region = "IDF" };
-                var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(content)));
                 var sb = new ServiceBusConnectionStringBuilder(host.Services.GetService<IConfiguration>()?.GetConnectionString("ServiceBus"));
                 sb.EntityPath = "test-session-queue";
-                var queueClient = new QueueClient(sb);                
-                message.ContentType = "application/json";
-                message.SessionId = "123";
-
-                
-
-                // Send the message to the queue
-                await queueClient.SendAsync(message);
-
-
+                var queueClient = new QueueClient(sb);
+                var state = new SessionState();
+                //Send to bus 10 messages for 10 sessions (per user)
+                for (var usr = 0; usr < 10; usr++)
+                {
+                    for (var i = 0; i < 10; i++)
+                    {
+                        var content = new WorkItem() { Category = 123, ID = $"{usr}-{i}", Description = $"session:{usr}", Priority = 1, Region = "IDF", SessionId= $"{usr}" };
+                        var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(content)));
+                        
+                        message.ContentType = "application/json";
+                        message.SessionId = content.SessionId;
+                        state.AddOrUpdate(message.SessionId, i);
+                        // Send the message to the queue
+                        await queueClient.SendAsync(message);
+                    }
+                }
                 await host.RunAsync();
+                foreach (var usr in state.Content)
+                {
+                    Console.WriteLine($"sessionId: {usr.Key},count: {usr.Value}");
+                }
+                Console.ReadLine();
+                await queueClient.CloseAsync();                
             }
         }
     }

@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
+using System.Linq;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
@@ -85,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 
             ITriggerData triggerData = await _argumentBinding.BindAsync(message, context);
             //IReadOnlyDictionary<string, object> bindingData = CreateBindingData(message, _listener?.Receiver, triggerData.BindingData);
-            IReadOnlyDictionary<string, object> bindingData = CreateBindingData(_listener.Session, message, triggerData.BindingData);
+            IReadOnlyDictionary<string, object> bindingData = CreateBindingData( message, triggerData.BindingData);
 
             return new TriggerData(triggerData.ValueProvider, bindingData);
         }
@@ -144,10 +145,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             return contract;
         }
 
-        internal static IReadOnlyDictionary<string, object> CreateBindingData(IMessageSession session, Message value, IReadOnlyDictionary<string, object> bindingDataFromValueType)
+        internal static IReadOnlyDictionary<string, object> CreateBindingData(Message value, IReadOnlyDictionary<string, object> bindingDataFromValueType)
         {
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
             
+
             SafeAddValue(() => bindingData.Add(nameof(value.SystemProperties.DeliveryCount), value.SystemProperties.DeliveryCount));
             SafeAddValue(() => bindingData.Add(nameof(value.SystemProperties.DeadLetterSource), value.SystemProperties.DeadLetterSource));
             SafeAddValue(() => bindingData.Add(nameof(value.SystemProperties.LockToken), value.SystemProperties.IsLockTokenSet ? value.SystemProperties.LockToken : string.Empty));
@@ -162,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             SafeAddValue(() => bindingData.Add(nameof(value.CorrelationId), value.CorrelationId));
             SafeAddValue(() => bindingData.Add(nameof(value.UserProperties), value.UserProperties));
             SafeAddValue(() => bindingData.Add("MessageReceiver", null));
-            SafeAddValue(() => bindingData.Add("MessageSession", session));
+            SafeAddValue(() => bindingData.Add("MessageSession", (IMessageSession) value.UserProperties["Session"]));
 
             if (bindingDataFromValueType != null)
             {

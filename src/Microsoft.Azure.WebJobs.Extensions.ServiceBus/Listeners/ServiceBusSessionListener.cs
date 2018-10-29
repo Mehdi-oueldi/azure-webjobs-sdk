@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private bool _disposed;
         private bool _started;
 
-        public IMessageSession Session => _sessionProcessor?.Session;
+       
         public ServiceBusSessionListener(string entityPath, ServiceBusTriggerExecutor triggerExecutor, ServiceBusOptions config, ServiceBusAccount serviceBusAccount, SessionProvider sessionProvider)
         {
             _entityPath = entityPath;
@@ -102,6 +102,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
      
         internal async Task ProcessSessionMessageAsync(IMessageSession session, Message message, CancellationToken cancellationToken)
         {
+            message.UserProperties.Add("Session", session);
             if (!await _sessionProcessor.BeginProcessingMessageAsync(session, message, cancellationToken))
             {
                 return;

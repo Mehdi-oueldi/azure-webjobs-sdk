@@ -12,8 +12,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 {
       public class SessionProcessor
     {
-        public IQueueClient SessionReceiver { get; }
-        public IMessageSession Session { get; private set; }
+        public IQueueClient SessionReceiver { get; }       
         public SessionHandlerOptions SessionOptions { get; }
         public SessionProcessor(IQueueClient sessionReceiver, SessionHandlerOptions sessionOptions)
         {
@@ -30,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <returns>A <see cref="Task"/> that returns true if the message processing should continue, false otherwise.</returns>
         public virtual async Task<bool> BeginProcessingMessageAsync(IMessageSession session, Message message, CancellationToken cancellationToken)
         {
-            Session = session;
+          
             return await Task.FromResult<bool>(true);
         }
 

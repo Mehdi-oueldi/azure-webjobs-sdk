@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace SampleHost
 {
@@ -46,5 +48,15 @@ namespace SampleHost
         {
             _logger.LogInformation("SampleServiceB.DoIt invoked!");
         }
+    }
+
+    public class SessionState
+    {
+
+        private readonly ConcurrentDictionary<string, long> _state = new ConcurrentDictionary<string, long>();
+        public long AddOrUpdate(string session, long newV) {
+            return _state.AddOrUpdate(session, newV, (key, oldV)=> oldV+ newV);
+        }
+        public IEnumerable<KeyValuePair<string, long>> Content => _state;
     }
 }
