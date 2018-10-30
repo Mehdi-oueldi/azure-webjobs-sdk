@@ -52,20 +52,25 @@ namespace SampleHost
                     // add some sample services to demonstrate job class DI
                     services.AddSingleton<ISampleServiceA, SampleServiceA>();
                     services.AddSingleton<ISampleServiceB, SampleServiceB>();
+                    services.AddSingleton<SessionState>();
+
                 })                
                 .UseConsoleLifetime();
 
             var host = builder.Build();
             using (host)
             {
-                
-                var sb = new ServiceBusConnectionStringBuilder(host.Services.GetService<IConfiguration>()?.GetConnectionString("ServiceBus"));
-                sb.EntityPath = "test-session-queue";
+                var sessionState = host.Services.GetService<SessionState>().Content;
+                var classicalClientConnection = new ServiceBusConnectionStringBuilder(host.Services.GetService<IConfiguration>()?.GetConnectionString("ServiceBus"));
+                classicalClientConnection.EntityPath = "test-classical-queue";
+                var classicalQueueClient = new QueueClient(classicalClientConnection);
+                var sessionClientConnection = new ServiceBusConnectionStringBuilder(host.Services.GetService<IConfiguration>()?.GetConnectionString("ServiceBus"));
+                sessionClientConnection.EntityPath = "test-session-queue";              
+                var sessionQueueClient = new QueueClient(sessionClientConnection);
               
-                var queueClient = new QueueClient(sb);
-           
-                var state = new SessionState();
+
                 //Send to bus 10 messages for 10 sessions (per user)
+                Console.WriteLine("Sending 10 message for 10 sessions");
                 for (var usr = 0; usr < 10; usr++)
                 {
                     for (var i = 0; i < 10; i++)
@@ -75,18 +80,26 @@ namespace SampleHost
                         
                         message.ContentType = "application/json";
                         message.SessionId = content.SessionId;
-                        state.AddOrUpdate(message.SessionId, i);
+                        await classicalQueueClient.SendAsync(message);
                         // Send the message to the queue
-                        await queueClient.SendAsync(message);
+                        await sessionQueueClient.SendAsync(message);
                     }
                 }
-                await host.RunAsync();
-                foreach (var usr in state.Content)
-                {
-                    Console.WriteLine($"sessionId: {usr.Key},count: {usr.Value}");
-                }
+                await host.RunAsync().ContinueWith(t=> {
+                    Console.WriteLine($"messages handled:");
+                    Console.WriteLine($"====================================");
+                    foreach (var usr in sessionState)
+                    {
+                        Console.WriteLine($"sessionId: {usr.Key} \t|\tcount: {usr.Value}");
+                    }
+                    Console.WriteLine($"====================================");
+                });
+               
                 Console.ReadLine();
-                await queueClient.CloseAsync();                
+
+
+
+                await sessionQueueClient.CloseAsync();                
             }
         }
     }

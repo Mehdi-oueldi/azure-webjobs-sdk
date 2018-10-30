@@ -23,11 +23,13 @@ namespace SampleHost
 
         private readonly ISampleServiceA _sampleServiceA;
         private readonly ISampleServiceB _sampleServiceB;
+        private readonly SessionState _sessionState;
 
-        public Functions(ISampleServiceA sampleServiceA, ISampleServiceB sampleServiceB)
+        public Functions(ISampleServiceA sampleServiceA, ISampleServiceB sampleServiceB, SessionState state)
         {
             _sampleServiceA = sampleServiceA;
             _sampleServiceB = sampleServiceB;
+            _sessionState = state;
         }
 
         public async Task ProcessWorkItem_ServiceBus(
@@ -37,16 +39,14 @@ namespace SampleHost
            ILogger log)
 
         {
-           
-
             log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
-
+            _sessionState.AddOrUpdate("-", 1);
             await Task.Delay(100);
 
             log.LogInformation($"Message complete (Id={messageId})");
         }
 
-        public async Task ProcessWorkItem_ServiceBus(
+        public async Task ProcessWorkItem_Session_ServiceBus(
             [ServiceBusSessionTrigger("test-session-queue")] WorkItem message,
             string messageId,
             int deliveryCount,
@@ -61,9 +61,8 @@ namespace SampleHost
             }
 
             log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
-
+            _sessionState.AddOrUpdate(message.SessionId, 1);
             await Task.Delay(100);
-
             log.LogInformation($"Message complete (Id={messageId})");
         }    
     }
