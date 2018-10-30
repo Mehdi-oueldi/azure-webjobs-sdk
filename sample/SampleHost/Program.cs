@@ -52,7 +52,7 @@ namespace SampleHost
                     // add some sample services to demonstrate job class DI
                     services.AddSingleton<ISampleServiceA, SampleServiceA>();
                     services.AddSingleton<ISampleServiceB, SampleServiceB>();
-                })
+                })                
                 .UseConsoleLifetime();
 
             var host = builder.Build();
@@ -61,7 +61,9 @@ namespace SampleHost
                 
                 var sb = new ServiceBusConnectionStringBuilder(host.Services.GetService<IConfiguration>()?.GetConnectionString("ServiceBus"));
                 sb.EntityPath = "test-session-queue";
+              
                 var queueClient = new QueueClient(sb);
+           
                 var state = new SessionState();
                 //Send to bus 10 messages for 10 sessions (per user)
                 for (var usr = 0; usr < 10; usr++)

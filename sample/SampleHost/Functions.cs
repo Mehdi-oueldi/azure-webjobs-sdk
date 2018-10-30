@@ -30,7 +30,21 @@ namespace SampleHost
             _sampleServiceB = sampleServiceB;
         }
 
+        public async Task ProcessWorkItem_ServiceBus(
+           [ServiceBusTrigger("test-classical-queue")] WorkItem message,
+           string messageId,
+           int deliveryCount,         
+           ILogger log)
 
+        {
+           
+
+            log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
+
+            await Task.Delay(100);
+
+            log.LogInformation($"Message complete (Id={messageId})");
+        }
 
         public async Task ProcessWorkItem_ServiceBus(
             [ServiceBusSessionTrigger("test-session-queue")] WorkItem message,
@@ -40,6 +54,7 @@ namespace SampleHost
             ILogger log)
 
         {
+            //check session instance correlation 
             if (messageSession.SessionId != message.SessionId)
             {
                 throw new System.Exception("Session Id conflict");

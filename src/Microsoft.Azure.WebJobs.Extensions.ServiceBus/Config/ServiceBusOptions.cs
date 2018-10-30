@@ -21,12 +21,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             // logger. Customers can override this completely by setting their
             // own MessageHandlerOptions instance.
             MessageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
-            {
+            { 
+                 
                 MaxConcurrentCalls = 16
             };
-            //TODO bind session handler options
             SessionHandlerOptions = new SessionHandlerOptions(ExceptionReceivedHandler)
-            {
+            { 
                  MaxConcurrentSessions = 16
             };
         }
@@ -41,7 +41,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <see cref="MessageReceiver"/>s.
         /// </summary>
         public MessageHandlerOptions MessageHandlerOptions { get; set; }
-        public SessionHandlerOptions SessionHandlerOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default <see cref="Azure.ServiceBus.SessionHandlerOptions"/> that will be used by
+        /// <see cref="IQueueClient"/>s.
+        /// </summary>
+        public SessionHandlerOptions SessionHandlerOptions;
+
 
         /// <summary>
         /// Gets or sets the default PrefetchCount that will be used by <see cref="MessageReceiver"/>s.

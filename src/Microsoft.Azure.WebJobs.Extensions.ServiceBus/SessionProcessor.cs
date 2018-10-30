@@ -35,10 +35,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         /// <summary>
         /// This method completes processing of the specified message, after the job function has been invoked.
+        /// session lifetime should be handled manualy inside callbak 
         /// </summary>
         /// <remarks>
-        /// The message is completed by the ServiceBus SDK based on how the <see cref="MessageHandlerOptions.AutoComplete"/> option
-        /// is configured. E.g. if <see cref="MessageHandlerOptions.AutoComplete"/> is false, it is up to the job function to complete
+        /// The message is completed by the ServiceBus SDK based on how the <see cref="SessionHandlerOptions.AutoComplete"/> option
+        /// is configured. E.g. if <see cref="SessionHandlerOptions.AutoComplete"/> is false, it is up to the job function to complete
         /// the message.
         /// </remarks>
         /// <param name="message">The message to complete processing for.</param>
