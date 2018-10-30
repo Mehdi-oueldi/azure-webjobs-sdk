@@ -48,11 +48,6 @@ namespace Microsoft.Extensions.Hosting
                 });
             builder.Services.TryAddSingleton<MessagingProvider>();
 
-            //Add new extention to service bus
-            builder.AddExtension<ServiceBusSessionExtensionConfigProvider>();              
-
-            builder.Services.TryAddSingleton<SessionProvider>();
-
             return builder;
         }
     }

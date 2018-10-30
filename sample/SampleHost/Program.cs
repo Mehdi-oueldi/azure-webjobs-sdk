@@ -26,7 +26,8 @@ namespace SampleHost
                     b
                     .AddAzureStorageCoreServices()
                     .AddAzureStorage()
-                    .AddServiceBus();
+                    .AddServiceBus()
+                    .AddServiceBusSession();
                     //.AddEventHubs();
                 })
                 .ConfigureAppConfiguration(b =>
@@ -70,10 +71,10 @@ namespace SampleHost
               
 
                 //Send to bus 10 messages for 10 sessions (per user)
-                Console.WriteLine("Sending 10 message for 10 sessions");
-                for (var usr = 0; usr < 10; usr++)
+                Console.WriteLine("Sending 5 message for 5 sessions");
+                for (var usr = 0; usr < 5; usr++)
                 {
-                    for (var i = 0; i < 10; i++)
+                    for (var i = 0; i < 5; i++)
                     {
                         var content = new WorkItem() { Category = 123, ID = $"{usr}-{i}", Description = $"session:{usr}", Priority = 1, Region = "IDF", SessionId= $"{usr}" };
                         var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(content)));
