@@ -41,7 +41,6 @@ namespace Microsoft.Extensions.Hosting
                 .ConfigureOptions<ServiceBusOptions>((config, path, options) =>
                 {
                     options.ConnectionString = config.GetConnectionString(Constants.DefaultConnectionStringName);
-
                     IConfigurationSection section = config.GetSection(path);
                     section.Bind(options);
 
@@ -49,17 +48,9 @@ namespace Microsoft.Extensions.Hosting
                 });
             builder.Services.TryAddSingleton<MessagingProvider>();
 
+            //Add new extention to service bus
+            builder.AddExtension<ServiceBusSessionExtensionConfigProvider>();              
 
-            builder.AddExtension<ServiceBusSessionExtensionConfigProvider>()
-              .ConfigureOptions<ServiceBusOptions>((config, path, options) =>
-              {
-                  options.ConnectionString = config.GetConnectionString(Constants.DefaultConnectionStringName);
-
-                  IConfigurationSection section = config.GetSection(path);
-                  section.Bind(options);
-
-                  configure(options);
-              });
             builder.Services.TryAddSingleton<SessionProvider>();
 
             return builder;

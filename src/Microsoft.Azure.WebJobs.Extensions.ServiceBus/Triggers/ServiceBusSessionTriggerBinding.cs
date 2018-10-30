@@ -130,8 +130,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             contract.Add("To", typeof(string));
             contract.Add("Label", typeof(string));
             contract.Add("CorrelationId", typeof(string));
-            contract.Add("UserProperties", typeof(IDictionary<string, object>));
-            contract.Add("MessageReceiver", typeof(MessageReceiver));
+            contract.Add("UserProperties", typeof(IDictionary<string, object>));            
             contract.Add("MessageSession", typeof(IMessageSession));
             if (argumentBindingContract != null)
             {
@@ -163,9 +162,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             SafeAddValue(() => bindingData.Add(nameof(value.To), value.To));
             SafeAddValue(() => bindingData.Add(nameof(value.Label), value.Label));
             SafeAddValue(() => bindingData.Add(nameof(value.CorrelationId), value.CorrelationId));
-            SafeAddValue(() => bindingData.Add(nameof(value.UserProperties), value.UserProperties));
-            SafeAddValue(() => bindingData.Add("MessageReceiver", null));
-            SafeAddValue(() => bindingData.Add("MessageSession", (IMessageSession) value.UserProperties["Session"]));
+            SafeAddValue(() => bindingData.Add(nameof(value.UserProperties), value.UserProperties));            
+            SafeAddValue(() => bindingData.Add("MessageSession", (IMessageSession) value.UserProperties[SessionUserProperties.MessageSession]));
 
             if (bindingDataFromValueType != null)
             {

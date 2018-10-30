@@ -102,15 +102,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
      
         internal async Task ProcessSessionMessageAsync(IMessageSession session, Message message, CancellationToken cancellationToken)
         {
-            message.UserProperties.Add("Session", session);
-            if (!await _sessionProcessor.BeginProcessingMessageAsync(session, message, cancellationToken))
+            message.UserProperties.Add(SessionUserProperties.MessageSession, session);
+            if (!await _sessionProcessor.BeginProcessingMessageAsync(message, cancellationToken))
             {
                 return;
             }
 
             FunctionResult result = await _triggerExecutor.ExecuteAsync(message, cancellationToken);
 
-            await _sessionProcessor.CompleteProcessingMessageAsync(session, message, result, cancellationToken);
+            await _sessionProcessor.CompleteProcessingMessageAsync(message, result, cancellationToken);
         }
 
 

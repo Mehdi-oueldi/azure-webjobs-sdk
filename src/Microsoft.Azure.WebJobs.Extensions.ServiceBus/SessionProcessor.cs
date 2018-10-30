@@ -10,7 +10,14 @@ using Microsoft.Azure.ServiceBus.Core;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
-      public class SessionProcessor
+    /// <summary>
+    /// This class defines a strategy used for processing ServiceBus session enabled messages
+    /// </summary>
+    /// <remarks>
+    /// Custom <see cref="SessionProcessor"/> implementations can be specified by implementing
+    /// a custom <see cref="SessionProvider"/> and setting it via <see cref="ServiceBusOptions.SessionHandlerOptions"/>.
+    /// </remarks>
+    public class SessionProcessor
     {
         public IQueueClient SessionReceiver { get; }       
         public SessionHandlerOptions SessionOptions { get; }
@@ -27,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <param name="message">The message to process.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A <see cref="Task"/> that returns true if the message processing should continue, false otherwise.</returns>
-        public virtual async Task<bool> BeginProcessingMessageAsync(IMessageSession session, Message message, CancellationToken cancellationToken)
+        public virtual async Task<bool> BeginProcessingMessageAsync(Message message, CancellationToken cancellationToken)
         {
           
             return await Task.FromResult<bool>(true);
@@ -46,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns>A <see cref="Task"/> that will complete the message processing.</returns>
-        public virtual Task CompleteProcessingMessageAsync(IMessageSession session, Message message, FunctionResult result, CancellationToken cancellationToken)
+        public virtual Task CompleteProcessingMessageAsync(Message message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (result == null)
             {
