@@ -11,5 +11,6 @@ namespace SampleHost.Models
         public int Category { get; set; }
         public string Description { get; set; }
         public string SessionId { get; set; }
+        public int Step { get; set; }
     }
 }

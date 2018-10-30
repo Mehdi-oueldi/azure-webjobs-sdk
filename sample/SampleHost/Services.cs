@@ -55,7 +55,7 @@ namespace SampleHost
 
         private readonly ConcurrentDictionary<string, long> _state = new ConcurrentDictionary<string, long>();
         public long AddOrUpdate(string session, long newV) {
-            return _state.AddOrUpdate(session, newV, (key, oldV)=> oldV+ newV);
+            return _state.AddOrUpdate(session, newV, (key, oldV)=>  newV);
         }
         public IEnumerable<KeyValuePair<string, long>> Content => _state;
     }

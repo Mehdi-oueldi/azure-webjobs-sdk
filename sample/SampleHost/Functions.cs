@@ -40,7 +40,7 @@ namespace SampleHost
 
         {
             log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
-            _sessionState.AddOrUpdate("-", 1);
+            _sessionState.AddOrUpdate("-", message.Step);
             await Task.Delay(100);
 
             log.LogInformation($"Message complete (Id={messageId})");
@@ -61,9 +61,13 @@ namespace SampleHost
             }
 
             log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
-            _sessionState.AddOrUpdate(message.SessionId, 1);
+            _sessionState.AddOrUpdate(message.SessionId, message.Step);
             await Task.Delay(100);
             log.LogInformation($"Message complete (Id={messageId})");
+            if (message.Step == 4)
+            {
+                await messageSession.CloseAsync();
+            }
         }    
     }
 }

@@ -27,7 +27,7 @@ namespace SampleHost
                     .AddAzureStorageCoreServices()
                     .AddAzureStorage()
                     .AddServiceBus()
-                    .AddServiceBusSession();
+                    .AddServiceBusSession(c=>c.SessionHandlerOptions.MaxConcurrentSessions=1);
                     //.AddEventHubs();
                 })
                 .ConfigureAppConfiguration(b =>
@@ -76,7 +76,7 @@ namespace SampleHost
                 {
                     for (var i = 0; i < 5; i++)
                     {
-                        var content = new WorkItem() { Category = 123, ID = $"{usr}-{i}", Description = $"session:{usr}", Priority = 1, Region = "IDF", SessionId= $"{usr}" };
+                        var content = new WorkItem() { Category = 123, ID = $"{usr}-{i}", Description = $"session:{usr}", Priority = 1, Region = "IDF", SessionId= $"{usr}", Step=i };
                         var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(content)));
                         
                         message.ContentType = "application/json";
