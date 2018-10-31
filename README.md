@@ -1,4 +1,4 @@
-﻿Azure WebJobs SDK
+﻿Azure WebJobs SDK with new extention : WebJobs.Extensions.ServiceBusSessions
 ===
 
 |Branch|Status|
