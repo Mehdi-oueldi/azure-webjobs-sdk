@@ -41,11 +41,13 @@ namespace Microsoft.Extensions.Hosting
                 .ConfigureOptions<ServiceBusOptions>((config, path, options) =>
                 {
                     options.ConnectionString = config.GetConnectionString(Constants.DefaultConnectionStringName);
+
                     IConfigurationSection section = config.GetSection(path);
                     section.Bind(options);
 
                     configure(options);
                 });
+
             builder.Services.TryAddSingleton<MessagingProvider>();
 
             return builder;

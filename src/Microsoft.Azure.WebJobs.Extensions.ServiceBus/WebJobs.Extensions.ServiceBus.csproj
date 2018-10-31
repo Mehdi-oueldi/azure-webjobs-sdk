@@ -8,7 +8,6 @@
     <AssemblyName>Microsoft.Azure.WebJobs.ServiceBus</AssemblyName>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.ServiceBus</PackageId>
     <RootNamespace>Microsoft.Azure.WebJobs.ServiceBus</RootNamespace>
-    <Authors>Microsoft</Authors>
   </PropertyGroup>  
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
