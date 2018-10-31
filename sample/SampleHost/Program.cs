@@ -23,12 +23,12 @@ namespace SampleHost
                 .UseEnvironment("Development")
                 .ConfigureWebJobs(b =>
                 {
-                    b
-                    .AddAzureStorageCoreServices()
-                    .AddAzureStorage()
-                    .AddServiceBus()
-                    .AddServiceBusSession(c=>c.SessionHandlerOptions.MaxConcurrentSessions=1);
-                    //.AddEventHubs();
+                b
+                .AddAzureStorageCoreServices()
+                .AddAzureStorage()
+                .AddServiceBus()
+                .AddServiceBusSession(c => c.SessionHandlerOptions.MaxConcurrentSessions = 2);
+                    
                 })
                 .ConfigureAppConfiguration(b =>
                 {

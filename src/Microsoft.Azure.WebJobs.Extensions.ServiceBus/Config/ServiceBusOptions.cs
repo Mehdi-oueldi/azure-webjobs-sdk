@@ -22,11 +22,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             // own MessageHandlerOptions instance.
             MessageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
             { 
-                 
                 MaxConcurrentCalls = 16
             };
             SessionHandlerOptions = new SessionHandlerOptions(ExceptionReceivedHandler)
-            { 
+            {
+                // SessionHandlerOptions.AutoComplete should be false by default to accomplish session close manually (when any business condition is verified)
+                AutoComplete = false,
                  MaxConcurrentSessions = 16
             };
         }

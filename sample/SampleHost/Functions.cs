@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Microsoft.Azure.EventHubs;
@@ -47,26 +48,31 @@ namespace SampleHost
         }
 
         public async Task ProcessWorkItem_Session_ServiceBus(
-            [ServiceBusSessionTrigger("test-session-queue")] WorkItem message,
-            string messageId,
-            int deliveryCount,
-            IMessageSession messageSession,
-            ILogger log)
+            [ServiceBusSessionTrigger("test-session-queue")] WorkItem message, string messageId, int deliveryCount, IMessageSession messageSession, ILogger log)
 
         {
-            //check session instance correlation 
-            if (messageSession.SessionId != message.SessionId)
+            try
             {
-                throw new System.Exception("Session Id conflict");
-            }
+                //check session instance correlation 
+                if (messageSession.SessionId != message.SessionId)
+                {
+                    throw new System.Exception("Session Id conflict");
+                }
 
-            log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
-            _sessionState.AddOrUpdate(message.SessionId, message.Step);
-            await Task.Delay(100);
-            log.LogInformation($"Message complete (Id={messageId})");
-            if (message.Step == 4)
-            {
-                await messageSession.CloseAsync();
+                log.LogInformation($"Processing ServiceBus message (Id={messageId}, DeliveryCount={deliveryCount})");
+                _sessionState.AddOrUpdate(message.SessionId, message.Step);
+                await Task.Delay(100);
+                log.LogInformation($"Message complete (Id={messageId})");
+
+                // SessionHandlerOptions.AutoComplete should be false by default to accomplish session close manually (when any business condition is verified)
+                if (message.Step == 4)
+                {
+                    await messageSession.CloseAsync();
+                }
+            }
+            catch (Exception ex) {
+
+                log.LogError($"Message exception (Id={messageId} {ex.Message})");
             }
         }    
     }

@@ -48,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// The message is completed by the ServiceBus SDK based on how the <see cref="SessionHandlerOptions.AutoComplete"/> option
         /// is configured. E.g. if <see cref="SessionHandlerOptions.AutoComplete"/> is false, it is up to the job function to complete
         /// the message.
+        /// SessionHandlerOptions.AutoComplete should be false by default to accomplish session close manually .
         /// </remarks>
         /// <param name="message">The message to complete processing for.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
