@@ -2,16 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
-using Microsoft.Azure.ServiceBus.InteropExtensions;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using SampleHost.Filters;
 using SampleHost.Models;
 

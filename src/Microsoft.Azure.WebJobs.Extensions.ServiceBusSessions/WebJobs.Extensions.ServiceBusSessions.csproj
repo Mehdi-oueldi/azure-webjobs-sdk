@@ -5,9 +5,9 @@
   
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Microsoft.Azure.WebJobs.ServiceBus</AssemblyName>
+    <AssemblyName>Microsoft.Azure.WebJobs.ServiceBusSessions</AssemblyName>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.ServiceBus</PackageId>
-    <RootNamespace>Microsoft.Azure.WebJobs.ServiceBus</RootNamespace>
+    <RootNamespace>Microsoft.Azure.WebJobs.ServiceBusSessions</RootNamespace>
     <Authors>Microsoft</Authors>
   </PropertyGroup>  
   

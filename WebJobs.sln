@@ -55,6 +55,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WebJobs.Protocols", "src\Mi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeAzureStorage", "test\FakeStorage\FakeAzureStorage.csproj", "{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs.Extensions.ServiceBusSessions", "src\Microsoft.Azure.WebJobs.Extensions.ServiceBusSessions\WebJobs.Extensions.ServiceBusSessions.csproj", "{3E1E7A89-AAAB-4814-8C96-54DC4D9BAEE5}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems*{6bed7f8a-a199-4d9d-85d1-6856ee3292c6}*SharedItemsImports = 13
@@ -138,6 +140,10 @@ Global
 		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E1E7A89-AAAB-4814-8C96-54DC4D9BAEE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E1E7A89-AAAB-4814-8C96-54DC4D9BAEE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E1E7A89-AAAB-4814-8C96-54DC4D9BAEE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E1E7A89-AAAB-4814-8C96-54DC4D9BAEE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
