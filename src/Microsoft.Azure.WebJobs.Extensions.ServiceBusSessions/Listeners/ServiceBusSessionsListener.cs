@@ -9,11 +9,13 @@ using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
+using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 
 namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
 {
 
-    internal sealed class ServiceBusSessionListener : IListener
+    internal sealed class ServiceBusSessionsListener : IListener
     {
     
         private readonly SessionProvider _sessionProvider;
@@ -27,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
         private bool _started;
 
        
-        public ServiceBusSessionListener(string entityPath, ServiceBusTriggerExecutor triggerExecutor, ServiceBusOptions config, ServiceBusAccount serviceBusAccount, SessionProvider sessionProvider)
+        public ServiceBusSessionsListener(string entityPath, ServiceBusTriggerExecutor triggerExecutor, ServiceBusOptions config, ServiceBusAccount serviceBusAccount, SessionProvider sessionProvider)
         {
             _entityPath = entityPath;
             _triggerExecutor = triggerExecutor;

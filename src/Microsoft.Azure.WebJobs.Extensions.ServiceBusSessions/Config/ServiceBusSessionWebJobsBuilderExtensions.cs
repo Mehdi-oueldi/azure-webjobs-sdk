@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Azure.WebJobs.ServiceBusSessions;
 using Microsoft.Azure.WebJobs.ServiceBusSessions.Config;
 using Microsoft.Extensions.Configuration;
@@ -20,12 +21,12 @@ namespace Microsoft.Extensions.Hosting
             return builder;
         }
 
-        public static IWebJobsBuilder AddServiceBusSession(this IWebJobsBuilder builder, Action<ServiceBusOptions> configure)
+        public static IWebJobsBuilder AddServiceBusSession(this IWebJobsBuilder builder, Action<ServiceBusSessionsOptions> configure)
         {
            // builder.AddServiceBus(configure);
             //Add new extention to service bus
             builder.AddExtension<ServiceBusSessionExtensionConfigProvider>()
-             .ConfigureOptions<ServiceBusOptions>((config, path, options) =>
+             .ConfigureOptions<ServiceBusSessionsOptions>((config, path, options) =>
               {
                   options.ConnectionString = config.GetConnectionString(Constants.DefaultConnectionStringName);
                   IConfigurationSection section = config.GetSection(path);

@@ -6,15 +6,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Azure.WebJobs.ServiceBusSessions.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners;
-using System.Linq;
+using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
+using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
+using Bindings = Microsoft.Azure.WebJobs.ServiceBus.Bindings;
+using Triggers = Microsoft.Azure.WebJobs.ServiceBus.Triggers;
 
 namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Triggers
 {
@@ -30,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Triggers
         private readonly string _subscriptionName;
         private readonly string _entityPath;
         private readonly ServiceBusOptions _options;
-        private ServiceBusSessionListener _listener;
+        private ServiceBusSessionsListener _listener;
         private readonly SessionProvider _sessionProvider;
 
         public ServiceBusSessionTriggerBinding(string parameterName, Type parameterType, ITriggerDataArgumentBinding<Message> argumentBinding, ServiceBusAccount account,
@@ -103,14 +105,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Triggers
 
             if (_queueName != null)
             {
-             factory = new ServiceBusQueueListenerFactory(_account, _queueName, context.Executor, _options, _sessionProvider);
+             factory = new ServiceBusSessionsQueueListenerFactory(_account, _queueName, context.Executor, _options, _sessionProvider);
             }
             else
             {
              
-            factory = new ServiceBusSubscriptionListenerFactory(_account, _topicName, _subscriptionName, context.Executor, _options, _sessionProvider);
+            factory = new ServiceBusSessionsSubscriptionListenerFactory(_account, _topicName, _subscriptionName, context.Executor, _options, _sessionProvider);
             }
-            _listener = (ServiceBusSessionListener)await factory.CreateAsync(context.CancellationToken);
+            _listener = (ServiceBusSessionsListener)await factory.CreateAsync(context.CancellationToken);
 
             return _listener;
         }
@@ -208,8 +210,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Triggers
         private static IObjectToTypeConverter<Message> CreateConverter(Type parameterType)
         {
             return new CompositeObjectToTypeConverter<Message>(
-                    new OutputConverter<Message>(new IdentityConverter<Message>()),
-                    new OutputConverter<string>(StringTodMessageConverterFactory.Create(parameterType)));
+                    new Bindings.OutputConverter<Message>(new IdentityConverter<Message>()),
+                    new Bindings.OutputConverter<string>(StringTodMessageConverterFactory.Create(parameterType)));
         }
     }  
 }

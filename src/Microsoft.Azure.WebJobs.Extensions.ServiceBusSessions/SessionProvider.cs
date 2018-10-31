@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions
     {
         private readonly ConcurrentDictionary<string, IQueueClient> _queueClientCache = new ConcurrentDictionary<string, IQueueClient>();
 
-        private readonly ServiceBusOptions _options;
+        private readonly ServiceBusSessionsOptions _options;
         public virtual SessionProcessor CreateSessionProcessor(string entityPath, string connectionString)
         {
             if (string.IsNullOrEmpty(entityPath))
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions
 
             return new SessionProcessor(GetOrAddQueueClient(entityPath, connectionString), _options.SessionHandlerOptions);
         }
-        public SessionProvider(IOptions<ServiceBusOptions> serviceBusOptions)
+        public SessionProvider(IOptions<ServiceBusSessionsOptions> serviceBusOptions)
         {
             _options = serviceBusOptions?.Value ?? throw new ArgumentNullException(nameof(serviceBusOptions));
         }

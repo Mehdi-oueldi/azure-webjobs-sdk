@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
+using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 
 namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
 {
-    internal class ServiceBusSubscriptionListenerFactory : IListenerFactory
+    internal class ServiceBusSessionsSubscriptionListenerFactory : IListenerFactory
     {
         private readonly ServiceBusAccount _account;
         private readonly string _topicName;
@@ -19,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
         private readonly MessagingProvider _messagingProvider;
         private readonly SessionProvider _sessionProvider;
 
-        public ServiceBusSubscriptionListenerFactory(ServiceBusAccount account, string topicName, string subscriptionName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, MessagingProvider messagingProvider)
+        public ServiceBusSessionsSubscriptionListenerFactory(ServiceBusAccount account, string topicName, string subscriptionName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, MessagingProvider messagingProvider)
         {
             _account = account;
             _topicName = topicName;
@@ -28,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
             _options = options;
             _messagingProvider = messagingProvider;
         }
-        public ServiceBusSubscriptionListenerFactory(ServiceBusAccount account, string topicName, string subscriptionName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, SessionProvider sessionProvider)
+        public ServiceBusSessionsSubscriptionListenerFactory(ServiceBusAccount account, string topicName, string subscriptionName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, SessionProvider sessionProvider)
         {
             _account = account;
             _topicName = topicName;
@@ -46,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
             
             var listener = (_sessionProvider == null) ?
              new ServiceBusListener(entityPath, triggerExecutor, _options, _account, _messagingProvider) as IListener :
-             new ServiceBusSessionListener(entityPath, triggerExecutor, _options, _account, _sessionProvider) as IListener;
+             new ServiceBusSessionsListener(entityPath, triggerExecutor, _options, _account, _sessionProvider) as IListener;
 
             return Task.FromResult<IListener>(listener);
         }

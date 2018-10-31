@@ -5,10 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
+using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 
 namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
 {
-    internal class ServiceBusQueueListenerFactory : IListenerFactory
+    internal class ServiceBusSessionsQueueListenerFactory : IListenerFactory
     {
         private readonly ServiceBusAccount _account;
         private readonly string _queueName;
@@ -17,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
         private readonly MessagingProvider _messagingProvider;
         private readonly SessionProvider _sessionProvider;
 
-        public ServiceBusQueueListenerFactory(ServiceBusAccount account, string queueName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, MessagingProvider messagingProvider)
+        public ServiceBusSessionsQueueListenerFactory(ServiceBusAccount account, string queueName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, MessagingProvider messagingProvider)
         {
             _account = account;
             _queueName = queueName;
@@ -25,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
             _options = options;
             _messagingProvider = messagingProvider;
         }
-        public ServiceBusQueueListenerFactory(ServiceBusAccount account, string queueName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, SessionProvider sessionProvider)
+        public ServiceBusSessionsQueueListenerFactory(ServiceBusAccount account, string queueName, ITriggeredFunctionExecutor executor, ServiceBusOptions options, SessionProvider sessionProvider)
         {
             _account = account;
             _queueName = queueName;
@@ -40,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners
             var triggerExecutor = new ServiceBusTriggerExecutor(_executor);
             var listener = (_sessionProvider == null) ?
                 new ServiceBusListener(_queueName, triggerExecutor, _options, _account, _messagingProvider) as IListener :
-                new ServiceBusSessionListener(_queueName, triggerExecutor, _options, _account, _sessionProvider) as IListener;
+                new ServiceBusSessionsListener(_queueName, triggerExecutor, _options, _account, _sessionProvider) as IListener;
 
             return Task.FromResult<IListener>(listener);
         }

@@ -6,7 +6,8 @@ using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
-using Microsoft.Azure.WebJobs.ServiceBusSessions.Bindings;
+using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBusSessions.Triggers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Config
         /// Creates a new <see cref="ServiceBusExtensionConfigProvider"/> instance.
         /// </summary>
         /// <param name="options">The <see cref="ServiceBusOptions"></see> to use./></param>
-        public ServiceBusSessionExtensionConfigProvider(IOptions<ServiceBusOptions> options,
+        public ServiceBusSessionExtensionConfigProvider(IOptions<ServiceBusSessionsOptions> options,
             SessionProvider sessionProvider,
             INameResolver nameResolver,
             IConfiguration configuration,
