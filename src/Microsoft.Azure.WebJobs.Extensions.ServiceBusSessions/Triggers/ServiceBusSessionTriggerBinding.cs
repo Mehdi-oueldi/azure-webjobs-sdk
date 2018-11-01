@@ -15,8 +15,7 @@ using Microsoft.Azure.WebJobs.ServiceBusSessions.Listeners;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
-using Bindings = Microsoft.Azure.WebJobs.ServiceBus.Bindings;
-using Triggers = Microsoft.Azure.WebJobs.ServiceBus.Triggers;
+ 
 
 namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Triggers
 {
@@ -210,8 +209,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions.Triggers
         private static IObjectToTypeConverter<Message> CreateConverter(Type parameterType)
         {
             return new CompositeObjectToTypeConverter<Message>(
-                    new Bindings.OutputConverter<Message>(new IdentityConverter<Message>()),
-                    new Bindings.OutputConverter<string>(StringTodMessageConverterFactory.Create(parameterType)));
+                    new Microsoft.Azure.WebJobs.ServiceBus.Triggers.OutputConverter<Message>(new IdentityConverter<Message>()),
+                    new Microsoft.Azure.WebJobs.ServiceBus.Triggers.OutputConverter<string>(StringTodMessageConverterFactory.Create(parameterType)));
         }
     }  
 }
