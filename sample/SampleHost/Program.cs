@@ -25,7 +25,7 @@ namespace SampleHost
                 {
                 b
                 .AddAzureStorageCoreServices()
-                .AddAzureStorage()
+                .AddAzureStorage() 
                 .AddServiceBus()
                 .AddServiceBusSession(c => c.SessionHandlerOptions.MaxConcurrentSessions = 2);
                     

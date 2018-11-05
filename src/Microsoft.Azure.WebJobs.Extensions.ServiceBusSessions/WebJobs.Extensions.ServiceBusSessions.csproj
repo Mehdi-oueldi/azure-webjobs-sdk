@@ -66,9 +66,7 @@ Handle ServiceBus session messages with WebJob/Azure Function</Description>
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Bindings\StringToServiceBusEntityConverter.cs" Link="Bindings\StringToServiceBusEntityConverter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Bindings\UserTypeArgumentBindingProvider.cs" Link="Bindings\UserTypeArgumentBindingProvider.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Bindings\UserTypeToBrokeredMessageConverter.cs" Link="Bindings\UserTypeToBrokeredMessageConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Config\ServiceBusExtensionConfigProvider.cs" Link="Config\ServiceBusExtensionConfigProvider.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Config\ServiceBusOptions.cs" Link="Config\ServiceBusOptions.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Config\ServiceBusWebJobsBuilderExtensions.cs" Link="Config\ServiceBusWebJobsBuilderExtensions.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Constants.cs" Link="Constants.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\ContentTypes.cs" Link="ContentTypes.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\EntityType.cs" Link="EntityType.cs" />
@@ -83,8 +81,6 @@ Handle ServiceBus session messages with WebJob/Azure Function</Description>
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\ServiceBusAccount.cs" Link="ServiceBusAccount.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\ServiceBusAccountAttribute.cs" Link="ServiceBusAccountAttribute.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\ServiceBusAttribute.cs" Link="ServiceBusAttribute.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\ServiceBusTriggerAttribute.cs" Link="ServiceBusTriggerAttribute.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\ServiceBusWebJobsStartup.cs" Link="ServiceBusWebJobsStartup.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\StrictEncodings.cs" Link="StrictEncodings.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\CompositeArgumentBindingProvider.cs" Link="Triggers\CompositeArgumentBindingProvider.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\ConverterArgumentBindingProvider.cs" Link="Triggers\ConverterArgumentBindingProvider.cs" />
@@ -93,8 +89,6 @@ Handle ServiceBus session messages with WebJob/Azure Function</Description>
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\MessageToStringConverter.cs" Link="Triggers\MessageToStringConverter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\MessageValueProvider.cs" Link="Triggers\MessageValueProvider.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\OutputConverter.cs" Link="Triggers\OutputConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\ServiceBusTriggerAttributeBindingProvider.cs" Link="Triggers\ServiceBusTriggerAttributeBindingProvider.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\ServiceBusTriggerBinding.cs" Link="Triggers\ServiceBusTriggerBinding.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\ServiceBusTriggerParameterDescriptor.cs" Link="Triggers\ServiceBusTriggerParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\StringToBinaryMessageConverter.cs" Link="Triggers\StringToBinaryMessageConverter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Extensions.ServiceBus\Triggers\StringToJsonMessageConverter.cs" Link="Triggers\StringToJsonMessageConverter.cs" />

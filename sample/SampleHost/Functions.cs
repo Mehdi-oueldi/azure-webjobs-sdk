@@ -26,7 +26,7 @@ namespace SampleHost
             _sampleServiceB = sampleServiceB;
             _sessionState = state;
         }
-
+        
         public async Task ProcessWorkItem_ServiceBus(
            [ServiceBusTrigger("test-classical-queue")] WorkItem message,
            string messageId,
