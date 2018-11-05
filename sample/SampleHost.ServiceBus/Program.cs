@@ -24,8 +24,7 @@ namespace SampleHostServiceBus
                 .ConfigureWebJobs(b =>
                 {
                 b
-                .AddAzureStorageCoreServices()
-                .AddAzureStorage() 
+                .AddAzureStorageCoreServices()              
                 .AddServiceBus()
                 .AddServiceBusSession(c => c.SessionHandlerOptions.MaxConcurrentSessions = 2);
                     
