@@ -8,8 +8,8 @@
 |v2.x|[![Build status](https://ci.appveyor.com/api/projects/status/3qmk6ukn942q220j/branch/v2.x?svg=true)](https://ci.appveyor.com/project/appsvc/azure-webjobs-sdk-rqm4t/branch/v2.x)|
 
 
-This fork of **Azure WebJobs SDK** include new ServiceBus Session binging en trigger.
-New ServiceBusSession project code is actualy coupled with Webjob (like ServiceBus project code) project but ServiceBusSession nuget package can be deployed independently 
+This fork of **Azure WebJobs SDK** extend ServiceBus binging and trigger to handle session messages.
+New ServiceBus Session project is actualy coupled with Webjob (like ServiceBus project code) but ServiceBusSession nuget package can be deployed independently 
 
 
 ## Documentation
