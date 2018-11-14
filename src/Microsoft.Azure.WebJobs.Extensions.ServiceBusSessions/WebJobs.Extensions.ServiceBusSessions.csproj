@@ -8,11 +8,15 @@
     <AssemblyName>Microsoft.Azure.WebJobs.ServiceBusSessions</AssemblyName>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.ServiceBusSessions</PackageId>
     <RootNamespace>Microsoft.Azure.WebJobs.ServiceBusSessions</RootNamespace>
-    <Authors>Microsoft</Authors>
+    <Authors>Mehdi OUELDI</Authors>
     <Product>Microsoft.Azure.WebJobs.ServiceBusSessions</Product>
     <Description>Forked version of original Microsoft.Azure.WebJobs.Extensions.ServiceBus
 Handle ServiceBus session messages with WebJob/Azure Function</Description>
     <RepositoryUrl>https://github.com/moueldi/azure-webjobs-sdk</RepositoryUrl>
+    <Version>3.0.2</Version>
+    <Company>Ageas Services</Company>
+    <AssemblyVersion>3.0.2.1</AssemblyVersion>
+    <FileVersion>3.0.2.1</FileVersion>
   </PropertyGroup>  
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
