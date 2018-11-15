@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBusSessions
         {
             string cacheKey = $"{entityPath}-{connectionString}";
             return _queueClientCache.GetOrAdd(cacheKey,
-                new QueueClient(connectionString, entityPath, receiveMode: ReceiveMode.ReceiveAndDelete )
+                new QueueClient(connectionString, entityPath, receiveMode: ReceiveMode.PeekLock )
                 {
                      
                     PrefetchCount = _options.PrefetchCount

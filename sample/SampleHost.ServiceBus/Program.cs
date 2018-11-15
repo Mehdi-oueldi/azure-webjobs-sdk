@@ -23,11 +23,11 @@ namespace SampleHostServiceBus
                 .UseEnvironment("Development")
                 .ConfigureWebJobs(b =>
                 {
-                b
-                .AddAzureStorageCoreServices()              
-                .AddServiceBus()
-                .AddServiceBusSession(c => c.SessionHandlerOptions.MaxConcurrentSessions = 2);
-                    
+                    b
+                    .AddAzureStorageCoreServices()
+                    .AddServiceBus(sb => sb.MessageHandlerOptions.AutoComplete = true)
+                    .AddServiceBusSession(ms =>
+                    ms.SessionHandlerOptions.MaxConcurrentSessions = 2);                    
                 })
                 .ConfigureAppConfiguration(b =>
                 {

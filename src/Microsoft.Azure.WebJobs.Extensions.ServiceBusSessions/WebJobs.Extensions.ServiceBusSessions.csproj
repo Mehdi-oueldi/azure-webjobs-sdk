@@ -13,10 +13,10 @@
     <Description>Forked version of original Microsoft.Azure.WebJobs.Extensions.ServiceBus
 Handle ServiceBus session messages with WebJob/Azure Function</Description>
     <RepositoryUrl>https://github.com/moueldi/azure-webjobs-sdk</RepositoryUrl>
-    <Version>3.0.2</Version>
+    <Version>3.0.3</Version>
     <Company>Ageas Services</Company>
-    <AssemblyVersion>3.0.2.1</AssemblyVersion>
-    <FileVersion>3.0.2.1</FileVersion>
+    <AssemblyVersion>3.0.3.0</AssemblyVersion>
+    <FileVersion>3.0.3.0</FileVersion>
   </PropertyGroup>  
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

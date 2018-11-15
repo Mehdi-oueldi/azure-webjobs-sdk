@@ -42,7 +42,7 @@ namespace SampleHostServiceBus
         }
 
         public async Task ProcessWorkItem_Session_ServiceBus(
-            [ServiceBusSessionTrigger("test-session-queue")] WorkItem message, string messageId, int deliveryCount, IMessageSession messageSession, ILogger log)
+            [ServiceBusSessionTrigger("test-session-queue")] WorkItem message, string lockToken, string messageId, int deliveryCount, IMessageSession messageSession, ILogger log)
 
         {
             try
@@ -58,6 +58,7 @@ namespace SampleHostServiceBus
                 await Task.Delay(100);
                 log.LogInformation($"Message complete (Id={messageId})");
 
+                await messageSession.CompleteAsync(lockToken);
                 // SessionHandlerOptions.AutoComplete should be false by default to accomplish session close manually (when any business condition is verified)
                 if (message.Step == 4)
                 {
@@ -65,7 +66,7 @@ namespace SampleHostServiceBus
                 }
             }
             catch (Exception ex) {
-
+                
                 log.LogError($"Message exception (Id={messageId} {ex.Message})");
             }
         }    
