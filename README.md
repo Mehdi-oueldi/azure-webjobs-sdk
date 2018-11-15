@@ -10,7 +10,9 @@
 
 This fork of **Azure WebJobs SDK** extend ServiceBus binging and trigger to handle session messages.
 New ServiceBus Session project is actualy coupled with Webjob (like ServiceBus project code) but ServiceBusSession nuget package can be deployed independently 
-
+## Integration
+The added project WebJobs.Extensions.ServiceBusSessions can be published individually to your projects.
+That means you can use original microsoft webjobs packages with this new session extension package
 
 ## Documentation
 
