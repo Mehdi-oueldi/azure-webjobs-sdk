@@ -16,6 +16,10 @@ That means you can use original microsoft webjobs packages with this new session
 
 ## Documentation
 
+# Check sample project:
+https://github.com/moueldi/azure-webjobs-sdk/blob/dev/sample/SampleHost.ServiceBus/Program.cs
+
+
 Check out the [getting started guide](https://docs.microsoft.com/en-us/azure/app-service/webjobs-sdk-get-started), the [how-to guide](https://docs.microsoft.com/en-us/azure/app-service/webjobs-sdk-how-to) and the [wiki](https://github.com/Azure/azure-webjobs-sdk/wiki). For more information on Azure and .NET see [here](https://docs.microsoft.com/en-us/dotnet/azure/?view=azure-dotnet).
 
 ## Contributing
